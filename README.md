@@ -7,7 +7,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 <!-- <a href="https://huggingface.co/Xiaojiu-Z/EasyControl/"><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a> -->
 <!-- <a ><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a> -->
 
-> *[Rui Lan](https://scholar.google.com/citations?user=zwVlWXwAAAAJ&hl=zh-CN), [Yancheng Bai](https://scholar.google.com/citations?hl=zh-CN&user=Ilx8WNkAAAAJ&view_op=list_works&sortby=pubdate), [Xu Duan](https://scholar.google.com/citations?hl=zh-CN&user=EEUiFbwAAAAJ), [Mingxing Li](https://scholar.google.com/citations?hl=zh-CN&user=-pfkprkAAAAJ), Lei Sun, [Xiangxiang Chu](https://scholar.google.com/citations?hl=zh-CN&user=jn21pUsAAAAJ&view_op=list_works&sortby=pubdate)*
+> *[Rui Lan](https://scholar.google.com/citations?user=zwVlWXwAAAAJ&hl=zh-CN), [Yancheng Bai](https://scholar.google.com/citations?hl=zh-CN&user=Ilx8WNkAAAAJ&view_op=list_works&sortby=pubdate), [Xu Duan](https://scholar.google.com/citations?hl=zh-CN&user=EEUiFbwAAAAJ), [Mingxing Li](https://scholar.google.com/citations?hl=zh-CN&user=-pfkprkAAAAJ), [Lei Sun](https://allylei.github.io), [Xiangxiang Chu](https://scholar.google.com/citations?hl=zh-CN&user=jn21pUsAAAAJ&view_op=list_works&sortby=pubdate)*
 > <br>
 > ALibaba Group
 
@@ -131,7 +131,7 @@ bash eval/eval_lpips.sh
 
 ## 🌹 Acknowledgement
 
-Our work is primarily based on [OminiControl](https://github.com/Yuanshi9815/OminiControl), [AnyText](https://github.com/tyxsspa/AnyText), [Open-Sora](https://github.com/hpcaitech/Open-Sora). We are sincerely grateful for their excellent works.
+Our work is primarily based on [OminiControl](https://github.com/Yuanshi9815/OminiControl), [AnyText](https://github.com/tyxsspa/AnyText), [Open-Sora](https://github.com/hpcaitech/Open-Sora), [Phantom](https://github.com/Phantom-video/Phantom). We are sincerely grateful for their excellent works.
 
 ## 📚 Citation
 
