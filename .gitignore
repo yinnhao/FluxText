@@ -1,0 +1,7 @@
+*.pyc
+*.safetensors
+
+.DS_Store
+
+src/clip/
+tmp/
