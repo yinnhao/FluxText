@@ -18,12 +18,12 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 * **Contribution:** We propose FLUX-Text, a novel text editing framework for editing multi-line texts in complex visual scenes. By incorporating a lightweight Condition Injection LoRA module, Regional text perceptual loss, and two-stage training strategy, we significantly significant improvements on both Chinese and English benchmarks.
 <img src='assets/method.png'>
 
-<!-- ## News -->
+## News
 
-<!-- - **2025-06-29**: ⭐️ Inference and evaluate code are released. Once we have ensured that everything is functioning correctly, the new model will be merged into this repository. -->
+- **2025-06-26**: ⭐️ Inference and evaluate code are released. Once we have ensured that everything is functioning correctly, the new model will be merged into this repository.
 
 ## Todo List
-1. - [ ] Inference code 
+1. - [x] Inference code 
 2. - [ ] Pre-trained weights 
 3. - [ ] Gradio demo
 4. - [ ] Comfui
