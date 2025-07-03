@@ -4,7 +4,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 <a href='https://amap-ml.github.io/FLUX-text/'><img src='https://img.shields.io/badge/Project-Page-green'></a>
 <a href='https://arxiv.org/abs/2505.03329'><img src='https://img.shields.io/badge/Technique-Report-red'></a> 
-<!-- <a href="https://huggingface.co/Xiaojiu-Z/EasyControl/"><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a> -->
+<a href="https://huggingface.co/GD-ML/FLUX-Text/"><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a>
 <!-- <a ><img src="https://img.shields.io/badge/🤗_HuggingFace-Model-ffbd45.svg" alt="HuggingFace"></a> -->
 
 > *[Rui Lan](https://scholar.google.com/citations?user=zwVlWXwAAAAJ&hl=zh-CN), [Yancheng Bai](https://scholar.google.com/citations?hl=zh-CN&user=Ilx8WNkAAAAJ&view_op=list_works&sortby=pubdate), [Xu Duan](https://scholar.google.com/citations?hl=zh-CN&user=EEUiFbwAAAAJ), [Mingxing Li](https://scholar.google.com/citations?hl=zh-CN&user=-pfkprkAAAAJ), [Lei Sun](https://allylei.github.io), [Xiangxiang Chu](https://scholar.google.com/citations?hl=zh-CN&user=jn21pUsAAAAJ&view_op=list_works&sortby=pubdate)*
@@ -20,11 +20,13 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
+- **2025-07-03**: 🔥 We have released our [pre-trained checkpoints](https://huggingface.co/GD-ML/FLUX-Text/) on Hugging Face! You can now try out FLUX-Text with the official weights.
+
 - **2025-06-26**: ⭐️ Inference and evaluate code are released. Once we have ensured that everything is functioning correctly, the new model will be merged into this repository.
 
 ## Todo List
 1. - [x] Inference code 
-2. - [ ] Pre-trained weights 
+2. - [x] Pre-trained weights 
 3. - [ ] Gradio demo
 4. - [ ] ComfyUI
 5. - [ ] Training code
@@ -43,6 +45,37 @@ pip install -r requirements.txt
 pip install flash_attn --no-build-isolation
 pip install Pillow==9.5.0
 ```
+
+## 🤗 Model Introduction
+
+FLUX-Text is an open-source version of the scene text editing model. FLUX-Text can be used for editing posters, emotions, and more. The table below displays the list of text editing models we currently offer, along with their foundational information.
+
+<table style="border-collapse: collapse; width: 100%;">
+  <tr>
+    <th style="text-align: center;">Model Name</th>
+    <th style="text-align: center;">Image Resolution</th>
+    <th style="text-align: center;">Memory Usage</th>
+    <th style="text-align: center;">English Sen.Acc</th>
+    <th style="text-align: center;">Chinese Sen.Acc</th>
+    <th style="text-align: center;">Download Link</th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">FLUX-Text-512</th>
+    <th style="text-align: center;">512*512</th>
+    <th style="text-align: center;">34G</th>
+    <th style="text-align: center;">0.8419</th>
+    <th style="text-align: center;">0.7132</th>
+    <th style="text-align: center;"><a href="https://huggingface.co/GD-ML/FLUX-Text/tree/main/model_512">🤗 HuggingFace</a></th>
+  </tr>
+  <tr>
+    <th style="text-align: center;">FLUX-Text</th>
+    <th style="text-align: center;">Multi Resolution</th>
+    <th style="text-align: center;">34G for (512*512)</th>
+    <th style="text-align: center;">0.8228</th>
+    <th style="text-align: center;">0.7161</th>
+    <th style="text-align: center;"><a href="https://huggingface.co/GD-ML/FLUX-Text/tree/main/model_multisize">🤗 HuggingFace</a></th>
+  </tr>
+</table>
 
 ## 🔥 Quick Start
 
@@ -111,7 +144,7 @@ res.images[0].save('flux_fill.png')
 
 ## 📊 Evaluation
 
-For Anytext-benchmark, please set the **config_path**, **model_path**, **json_path**, **output_dir** in the `eval/gen_imgs_anytext.sh` and generate the text editing results.
+For [Anytext-benchmark](https://modelscope.cn/datasets/iic/AnyText-benchmark/summary), please set the **config_path**, **model_path**, **json_path**, **output_dir** in the `eval/gen_imgs_anytext.sh` and generate the text editing results.
 
 ```bash
 bash eval/gen_imgs_anytext.sh
