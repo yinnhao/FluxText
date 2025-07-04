@@ -20,7 +20,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
-- **2025-07-4**: 🔥 We have released gradio demo! You can now try out FLUX-Text.
+- **2025-07-04**: 🔥 We have released gradio demo! You can now try out FLUX-Text.
 
 <div align="center">
 <table>
