@@ -20,6 +20,21 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
+- **2025-07-4**: 🔥 We have released gradio demo! You can now try out FLUX-Text.
+
+<div align="center">
+<table>
+<tr>
+    <td><img src="assets/gradio_1.png" alt="Example 1" width="400"/></td>
+    <td><img src="assets/gradio_2.png" alt="Example 2" width="400"/></td>
+</tr>
+<tr>
+    <td align="center">Example 1</td>
+    <td align="center">Example 2</td>
+</tr>
+</table>
+</div>
+
 - **2025-07-03**: 🔥 We have released our [pre-trained checkpoints](https://huggingface.co/GD-ML/FLUX-Text/) on Hugging Face! You can now try out FLUX-Text with the official weights.
 
 - **2025-06-26**: ⭐️ Inference and evaluate code are released. Once we have ensured that everything is functioning correctly, the new model will be merged into this repository.
@@ -27,7 +42,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 ## Todo List
 1. - [x] Inference code 
 2. - [x] Pre-trained weights 
-3. - [ ] Gradio demo
+3. - [x] Gradio demo
 4. - [ ] ComfyUI
 5. - [ ] Training code
 
@@ -138,6 +153,14 @@ res = generate_fill(
     default_lora=True,
 )
 res.images[0].save('flux_fill.png')
+```
+
+## 🤗 gradio
+
+You can upload the glyph image and mask image to edit text region. Or you can use `manual edit` to obtain glyph image and mask image.
+
+```bash
+python app.py
 ```
 
 ## 💪🏻  Training
