@@ -159,8 +159,10 @@ res.images[0].save('flux_fill.png')
 
 You can upload the glyph image and mask image to edit text region. Or you can use `manual edit` to obtain glyph image and mask image.
 
+first, download the model weight and config in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text)
+
 ```bash
-python app.py
+python app.py --model_path xx.safetensors --config_path config.yaml
 ```
 
 ## 💪🏻  Training
