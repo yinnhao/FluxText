@@ -20,6 +20,19 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
+- **2025-07-08**: 🔥 ComfyUI Node is supported! You can now build an workflow based on FLUX-Text for editing posters. 
+
+<div align="center">
+<table>
+<tr>
+    <td><img src="assets/comfyui.png" alt="workflow/FLUX-Text-Workflow.json" width="400"/></td>
+</tr>
+<tr>
+    <td align="center">workflow/FLUX-Text-Workflow.json</td>
+</tr>
+</table>
+</div>
+
 - **2025-07-04**: 🔥 We have released gradio demo! You can now try out FLUX-Text.
 
 <div align="center">
@@ -91,6 +104,35 @@ FLUX-Text is an open-source version of the scene text editing model. FLUX-Text c
     <th style="text-align: center;"><a href="https://huggingface.co/GD-ML/FLUX-Text/tree/main/model_multisize">🤗 HuggingFace</a></th>
   </tr>
 </table>
+
+## 🔥 ComfyUI
+
+<details close>
+<summary> Installing via GitHub </summary>
+
+First, install and set up [ComfyUI](https://github.com/comfyanonymous/ComfyUI), and then follow these steps:
+
+1. **Clone FLUXText Repository**:
+   ```shell
+   git clone https://github.com/AMAP-ML/FluxText.git
+   ```
+
+2. **Install OneDiff**:
+   ```shell
+   cd FluxText && pip install -r requirements.txt
+   ```
+
+3. **Integrate OneDiff Comfy Nodes with ComfyUI**:
+   - **Symbolic Link (Recommended)**:
+     ```shell
+     ln -s $(pwd)/ComfyUI-fluxtext path/to/ComfyUI/custom_nodes/
+     ```
+   - **Copy Directory**:
+     ```shell
+     cp -r ComfyUI-fluxtext path/to/ComfyUI/custom_nodes/
+     ```
+
+</details>
 
 ## 🔥 Quick Start
 
