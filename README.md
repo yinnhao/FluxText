@@ -56,7 +56,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 1. - [x] Inference code 
 2. - [x] Pre-trained weights 
 3. - [x] Gradio demo
-4. - [ ] ComfyUI
+4. - [x] ComfyUI
 5. - [ ] Training code
 
 ## 🛠️ Installation
@@ -117,12 +117,12 @@ First, install and set up [ComfyUI](https://github.com/comfyanonymous/ComfyUI), 
    git clone https://github.com/AMAP-ML/FluxText.git
    ```
 
-2. **Install OneDiff**:
+2. **Install FluxText**:
    ```shell
    cd FluxText && pip install -r requirements.txt
    ```
 
-3. **Integrate OneDiff Comfy Nodes with ComfyUI**:
+3. **Integrate FluxText Comfy Nodes with ComfyUI**:
    - **Symbolic Link (Recommended)**:
      ```shell
      ln -s $(pwd)/ComfyUI-fluxtext path/to/ComfyUI/custom_nodes/
