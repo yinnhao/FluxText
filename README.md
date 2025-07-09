@@ -20,7 +20,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
-- **2025-07-08**: 🔥 ComfyUI Node is supported! You can now build an workflow based on FLUX-Text for editing posters. 
+- **2025-07-08**: 🔥 ComfyUI Node is supported! You can now build an workflow based on FLUX-Text for editing posters. It is definitely worth trying to set up a workflow to automatically enhance product image service information and service scope. Meanwhile, utilizing the first and last frames enables the creation of video data with text effects. Thanks to the [community work](https://github.com/AMAP-ML/FluxText/issues/4), FLUX-Text was run on 8GB VRAM. 
 
 <div align="center">
 <table>
@@ -29,6 +29,40 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 </tr>
 <tr>
     <td align="center">workflow/FLUX-Text-Workflow.json</td>
+</tr>
+</table>
+</div>
+
+<div align="center">
+<table>
+<tr>
+    <td><img src="assets/ori_img1.png" alt="assets/ori_img1.png" width="200"/></td>
+    <td><img src="assets/new_img1.png" alt="assets/new_img1.png" width="200"/></td>
+    <td><img src="assets/ori_img2.png" alt="assets/ori_img2.png" width="200"/></td>
+    <td><img src="assets/new_img2.png" alt="assets/new_img2.png" width="200"/></td>
+</tr>
+<tr>
+    <td align="center">original image</td>
+    <td align="center">edited image</td>
+    <td align="center">original image</td>
+    <td align="center">edited image</td>
+</tr>
+</table>
+</div>
+
+<div align="center">
+<table>
+<tr>
+    <td><img src="assets/video_end1.png" alt="assets/video_end1.png" width="400"/></td>
+    <td><img src="assets/video1.gif" alt="assets/video1.gif" width="400"/></td>
+</tr>
+<tr>
+    <td><img src="assets/video_end2.png" alt="assets/video_end2.png" width="400"/></td>
+    <td><img src="assets/video2.gif" alt="assets/video2.gif" width="400"/></td>
+</tr>
+<tr>
+    <td align="center">last frame</td>
+    <td align="center">video</td>
 </tr>
 </table>
 </div>
