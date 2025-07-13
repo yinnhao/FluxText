@@ -95,7 +95,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 2. - [x] Pre-trained weights 
 3. - [x] Gradio demo
 4. - [x] ComfyUI
-5. - [ ] Training code
+5. - [x] Training code
 
 ## 🛠️ Installation
 
