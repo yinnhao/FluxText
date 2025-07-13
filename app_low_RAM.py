@@ -21,7 +21,7 @@ import torchvision.transforms as T
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'eval')))
 from eval.t3_dataset import draw_glyph2
 from src.flux.condition import Condition
-from src.flux.generate_fill import generate_fill
+from src.flux.generate_fill import generate_fill_low_RAM as generate_fill
 from src.train.model import OminiModelFIll
 
 ASPECT_RATIO_LD_LIST = [  # width:height
@@ -101,12 +101,13 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 def init_pipeline(args, config):
     training_config = config["train"]
     trainable_model = OminiModelFIll(
             flux_pipe_id=config["flux_path"],
             lora_config=training_config["lora_config"],
-            device=f"cuda",
+            device=f"cpu",
             dtype=getattr(torch, config["dtype"]),
             optimizer_config=training_config["optimizer"],
             model_config=config.get("model", {}),
@@ -127,7 +128,11 @@ def get_captions(ori_image, _input_file):
     image = Image.fromarray(ori_image)
     inputs = processor(image, return_tensors="pt").to(device, torch.float16)
 
+    blipmodel.to(device)
     generated_ids = blipmodel.generate(**inputs, max_new_tokens=20)
+    blipmodel.to('cpu')
+    torch.cuda.empty_cache()
+
     generated_text = processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
 
     caption = f'{generated_text}, that reads "{_input_file}"'
@@ -280,7 +285,7 @@ if __name__ == '__main__':
     processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
     blipmodel = Blip2ForConditionalGeneration.from_pretrained("Salesforce/blip2-opt-2.7b", torch_dtype=torch.float16)
     device = "cuda" if torch.cuda.is_available() else "cpu"
-    blipmodel.to(device, torch.float16)
+    blipmodel.to(torch.float16)
 
     pipe, trainable_model = init_pipeline(args, config)
 
