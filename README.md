@@ -22,7 +22,7 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 - **2025-07-13**: 🔥 The training code has been updated. The code now supports multi-scale training.
 
-- **2025-07-13**: 🔥 Update the low-RAM version of the Gradio demo, which It currently requires 25GB of VRAM to run. Looking forward to more efficient, lower-memory solutions from the community.
+- **2025-07-13**: 🔥 Update the low-VRAM version of the Gradio demo, which It currently requires 25GB of VRAM to run. Looking forward to more efficient, lower-memory solutions from the community.
 
 - **2025-07-08**: 🔥 ComfyUI Node is supported! You can now build an workflow based on FLUX-Text for editing posters. It is definitely worth trying to set up a workflow to automatically enhance product image service information and service scope. Meanwhile, utilizing the first and last frames enables the creation of video data with text effects. Thanks to the [community work](https://github.com/AMAP-ML/FluxText/issues/4), FLUX-Text was run on 8GB VRAM. 
 
