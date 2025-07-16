@@ -20,6 +20,19 @@ FLUX-Text: A Simple and Advanced Diffusion Transformer Baseline for Scene Text E
 
 ## News
 
+- **2025-07-16**: 🔥 Update comfyui node. We have decoupled the FLUX-Text node to support the use of more basic nodes. Due to differences in node computation in ComfyUI, if you need more consistent results, you should set min_length to 512 in the [code](https://github.com/comfyanonymous/ComfyUI/blob/master/comfy/text_encoders/flux.py#L12).
+
+<div align="center">
+<table>
+<tr>
+    <td><img src="assets/comfyui2.png" alt="workflow/FLUX-Text-Basic-Workflow.json" width="400"/></td>
+</tr>
+<tr>
+    <td align="center">workflow/FLUX-Text-Basic-Workflow.json</td>
+</tr>
+</table>
+</div>
+
 - **2025-07-13**: 🔥 The training code has been updated. The code now supports multi-scale training.
 
 - **2025-07-13**: 🔥 Update the low-VRAM version of the Gradio demo, which It currently requires 25GB of VRAM to run. Looking forward to more efficient, lower-memory solutions from the community.
@@ -246,6 +259,19 @@ python app.py --model_path xx.safetensors --config_path config.yaml
 ```
 
 ## 💪🏻  Training
+
+1. Download training dataset [**AnyWord-3M**](https://modelscope.cn/datasets/iic/AnyWord-3M/summary) from ModelScope, unzip all \*.zip files in each subfolder, then open *\*.json* and modify the `data_root` with your own path of *imgs* folder for each sub dataset.
+
+2. Download the ODM weights in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text/blob/main/epoch_100.pt).
+
+3. (Optional) Download the pretrained weight in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text).
+
+4. Run the training scripts. With 48GB of VRAM, you can train at 512×512 resolution with a batch size of 2.
+
+```bash
+bash train/script/train_word.sh
+```
+
 
 ## 📊 Evaluation
 
