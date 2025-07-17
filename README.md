@@ -262,11 +262,31 @@ python app.py --model_path xx.safetensors --config_path config.yaml
 
 1. Download training dataset [**AnyWord-3M**](https://modelscope.cn/datasets/iic/AnyWord-3M/summary) from ModelScope, unzip all \*.zip files in each subfolder, then open *\*.json* and modify the `data_root` with your own path of *imgs* folder for each sub dataset.
 
-2. Download the ODM weights in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text/blob/main/epoch_100.pt).
+2. Replace the old annotations in AnyWord with the new [annotations](https://huggingface.co/GD-ML/FLUX-Text/tree/main/data_text_recog_glyph). Change the dataset annotations path and image_root in [src/train/data_word.py](https://github.com/AMAP-ML/FluxText/blob/main/src/train/data_word.py#L538).
 
-3. (Optional) Download the pretrained weight in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text).
+```python
+json_paths = [
+        ['dataset/Anyword/data_text_recog_glyph/Art/data-info.json', 'AnyWord-3M/ocr_data/Art/imgs/'],
+        ['dataset/Anyword/data_text_recog_glyph/COCO_Text/data-info.json', 'AnyWord-3M/ocr_data/COCO_Text/imgs/'],
+        ['dataset/Anyword/data_text_recog_glyph/icdar2017rctw/data-info.json', 'AnyWord-3M/ocr_data/icdar2017rctw/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/LSVT/data-info.json', 'AnyWord-3M/ocr_data/LSVT/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/mlt2019/data-info.json', 'AnyWord-3M/ocr_data/mlt2019/imgs/'],
+        ['dataset/Anyword/data_text_recog_glyph/MTWI2018/data-info.json', 'AnyWord-3M/ocr_data/MTWI2018/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/ReCTS/data-info.json', 'AnyWord-3M/ocr_data/ReCTS/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/laion/data_v1.1-info.json', 'AnyWord-3M/laion/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/wukong_1of5/data_v1.1-info.json', 'AnyWord-3M/wukong_1of5/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/wukong_2of5/data_v1.1-info.json', 'AnyWord-3M/wukong_2of5/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/wukong_3of5/data_v1.1-info.json', 'AnyWord-3M/wukong_3of5/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/wukong_4of5/data_v1.1-info.json', 'AnyWord-3M/wukong_4of5/imgs'],
+        ['dataset/Anyword/data_text_recog_glyph/wukong_5of5/data_v1.1-info.json', 'AnyWord-3M/wukong_5of5/imgs'],
+        ]
+```
 
-4. Run the training scripts. With 48GB of VRAM, you can train at 512×512 resolution with a batch size of 2.
+3. Download the ODM weights in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text/blob/main/epoch_100.pt) and change `odm_loss/modelpath` in the [config file](https://github.com/AMAP-ML/FluxText/blob/main/train/config/word_multi_size.yaml#L60).
+
+3. (Optional) Download the pretrained weight in [HuggingFace](https://huggingface.co/GD-ML/FLUX-Text) and change `reuse_lora_path` in the [config file](https://github.com/AMAP-ML/FluxText/blob/main/train/config/word_multi_size.yaml#L44).
+
+4. Run the training scripts. With 48GB of VRAM, you can train at 512×512 resolution with a batch size of 2 in LoRA rank 8.
 
 ```bash
 bash train/script/train_word.sh
