@@ -35,6 +35,7 @@ def insert_spaces(string, nSpace):
 
 
 def draw_glyph(font, text):
+    
     g_size = 50
     W, H = (512, 80)
     new_font = font.font_variant(size=g_size)
@@ -60,6 +61,7 @@ def draw_glyph(font, text):
 
 
 def draw_glyph2(font, text, polygon, vertAng=10, scale=1, width=512, height=512, add_space=True):
+    
     enlarge_polygon = polygon*scale
     rect = cv2.minAreaRect(enlarge_polygon)
     box = cv2.boxPoints(rect)

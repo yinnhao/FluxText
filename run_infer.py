@@ -8,8 +8,8 @@ from src.flux.generate_fill import generate_fill
 from src.train.model import OminiModelFIll
 from safetensors.torch import load_file
 
-config_path = "/root/paddlejob/workspace/env_run/zhuyinghao/TAIR/FluxText/weights/model_multisize/config.yaml"
-lora_path = "/root/paddlejob/workspace/env_run/zhuyinghao/TAIR/FluxText/weights/model_multisize/pytorch_lora_weights.safetensors"
+config_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/weights/model_multisize/config.yaml"
+lora_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/weights/model_multisize/pytorch_lora_weights.safetensors"
 with open(config_path, "r") as f:
     config = yaml.safe_load(f)
 model = OminiModelFIll(
@@ -28,10 +28,18 @@ state_dict_new = {x.replace('lora_A', 'lora_A.default').replace('lora_B', 'lora_
 model.transformer.load_state_dict(state_dict_new, strict=False)
 pipe = model.flux_pipe
 
-prompt = "lepto college of education, the written materials on the picture: LESOTHO , COLLEGE OF , RE BONA LESELI LESEL , EDUCATION ."
-hint = Image.open("assets/hint.png").resize((512, 512)).convert('RGB')
-img = Image.open("assets/hint_imgs.jpg").resize((512, 512))
-condition_img = Image.open("assets/hint_imgs_word.png").resize((512, 512)).convert('RGB')
+# prompt = "lepto college of education, the written materials on the picture: LESOTHO , COLLEGE OF , RE BONA LESELI LESEL , EDUCATION ."
+# hint = Image.open("assets/hint.png").resize((512, 512)).convert('RGB')
+# img = Image.open("assets/hint_imgs.jpg").resize((512, 512))
+# condition_img = Image.open("assets/hint_imgs_word.png").resize((512, 512)).convert('RGB')
+
+height = 775
+width = 581
+
+prompt = "the written materials on the picture: ID.3冲量底价"
+hint = Image.open("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test_mask_rgb.png").resize((height, width)).convert('RGB')
+img = Image.open("text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg").resize((height, width))
+condition_img = Image.open("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test.png").resize((height, width)).convert('RGB')
 hint = np.array(hint) / 255
 condition_img = np.array(condition_img)
 condition_img = (255 - condition_img) / 255
@@ -47,10 +55,10 @@ res = generate_fill(
     pipe,
     prompt=prompt,
     conditions=[condition],
-    height=512,
-    width=512,
+    height=height,
+    width=width,
     generator=generator,
     model_config=config.get("model", {}),
     default_lora=True,
 )
-res.images[0].save('flux_fill.png')
+res.images[0].save('flux_fill2.png')
