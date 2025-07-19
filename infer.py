@@ -120,7 +120,7 @@ class FluxTextEditor:
             dtype=getattr(torch, self.config["dtype"]),
             optimizer_config=training_config["optimizer"],
             model_config=self.config.get("model", {}),
-            gradient_checkpointing=training_config.get("gradient_checkpointing", False),
+            gradient_checkpointing=True,#training_config.get("gradient_checkpointing", False),
             byt5_encoder_config=training_config.get("byt5_encoder", None),
         )
 
