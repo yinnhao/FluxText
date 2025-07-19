@@ -66,11 +66,13 @@ def render_glyph_image(
 
 
 # mask = cv2.imread("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/assets/hint1.png", cv2.IMREAD_GRAYSCALE)
-mask = cv2.imread("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/mask_vis/002_2025-07-15.png", cv2.IMREAD_GRAYSCALE)
+path = "../text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/mask_vis/002_2025-07-15.jpeg"
+# path = "../assets/hint2.png"
+mask = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
 # mask = cv2.imread("/root/paddlejob/workspace/env_run/rmp-individual/zhuyinghao/text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/", cv2.IMREAD_GRAYSCALE)
 
-text = "ID.3冲量底价"
-width, height = 581, 775
+text = "精神食粮"
+width, height = mask.shape[1], mask.shape[0]
 font_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/font/Arial_Unicode.ttf"
 
-glyph = render_glyph_image(mask, text, width, height, font_path, save_path="glyph_test.png")
+glyph = render_glyph_image(mask, text, width, height, font_path, save_path="002_2025-07-15_cond.png")

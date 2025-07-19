@@ -100,16 +100,16 @@ pipe = model.flux_pipe
 # height = 775
 # width = 581
 
-# hint_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test_mask_rgb.png"
-# img_path = "text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg"
-# condition_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test.png"
+hint_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test_mask_rgb.png"
+img_path = "text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg"
+condition_path = "eval/002_2025-07-15_cond.png"
 
 
-hint_path = "assets/hint2.jpg"
-img_path = "assets/hint_imgs2.jpg"
-condition_path = "assets/hint_imgs_word2.jpg"
+# hint_path = "./assets/hint2.png"
+# img_path = "./assets/hint_imgs2.jpg"
+# condition_path = "./eval/glyph_test3.png"
 
-prompt = "Car poster, that reads: ID.3冲量底价"
+prompt = "Car poster, that reads: 精神食粮"
 hint = Image.open(hint_path).convert('RGB')
 img = Image.open(img_path).convert('RGB')
 condition_img = Image.open(condition_path).convert('RGB')
