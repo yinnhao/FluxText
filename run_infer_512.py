@@ -100,8 +100,6 @@ pipe = model.flux_pipe
 # height = 775
 # width = 581
 
-
-
 prompt = "Car poster, that reads: ID.3冲量底价"
 hint = Image.open("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/eval/glyph_test_mask_rgb.png").convert('RGB')
 img = Image.open("text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg").convert('RGB')
