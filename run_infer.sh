@@ -28,15 +28,25 @@
 #     --prompt "A beautiful sign that reads 'Hello'"
 
 # 保存glyph
-img=./text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/mask_vis/002_2025-07-15.jpeg
-mask=./text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg
+# img=./text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/mask_vis/002_2025-07-15.jpeg
+# mask=./text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg
 
-./generate_text_image.sh \
-    --model_path weights/model_multisize/pytorch_lora_weights.safetensors \
-    --config_path weights/model_multisize/config.yaml \
-    --image_path $img \
-    --mask_path $mask \
-    --text Hello \
-    --output_path output2.jpg \
-    --save_glyph \
-    --glyph_output_path glyph_images/my_glyph2.png
+# ./generate_text_image.sh \
+#     --model_path weights/model_multisize/pytorch_lora_weights.safetensors \
+#     --config_path weights/model_multisize/config.yaml \
+#     --image_path $img \
+#     --mask_path $mask \
+#     --text Hello \
+#     --output_path output2.jpg \
+#     --save_glyph \
+#     --glyph_output_path glyph_images/my_glyph2.png
+
+python run_infer.py \
+    --config_path "weights/model_multisize/config.yaml" \
+    --lora_path "weights/model_multisize/pytorch_lora_weights.safetensors" \
+    --prompt "Car poster, that reads: 精神食粮" \
+    --hint_path "eval/glyph_test_mask_rgb.png" \
+    --img_path "text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg" \
+    --condition_path "eval/002_2025-07-15_cond.png" \
+    --output_path "my_output.png" \
+    --seed 42
