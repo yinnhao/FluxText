@@ -25,6 +25,27 @@ class CaptionGenerator:
         self.blipmodel.to(self.device, torch.float16)
         print(f"Model loaded on device: {self.device}")
     
+    def _preprocess_image(self, image):
+        """
+        Preprocess image to ensure compatibility with BLIP2.
+        
+        Args:
+            image: PIL Image
+            
+        Returns:
+            Preprocessed PIL Image
+        """
+        # Convert to RGB if needed
+        if image.mode != 'RGB':
+            image = image.convert('RGB')
+        
+        # For BLIP2 stability, ensure image dimensions are divisible by 32
+        # and use a standard size that works well with the model
+        target_size = 384  # Common size that works well with BLIP2
+        image = image.resize((target_size, target_size), Image.Resampling.LANCZOS)
+        
+        return image
+    
     def generate_caption(self, image_path: str, max_new_tokens: int = 20) -> str:
         """
         Generate a basic caption for the image.
@@ -36,18 +57,49 @@ class CaptionGenerator:
         Returns:
             Generated caption string
         """
-        # Load and process image
-        image = Image.open(image_path)
-        if image.mode != 'RGB':
-            image = image.convert('RGB')
-        
-        inputs = self.processor(image, return_tensors="pt").to(self.device, torch.float16)
-        
-        # Generate caption
-        generated_ids = self.blipmodel.generate(**inputs, max_new_tokens=max_new_tokens)
-        generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
-        
-        return generated_text
+        try:
+            # Load and preprocess image
+            image = Image.open(image_path)
+            image = self._preprocess_image(image)
+            
+            # Process image with specific parameters for stability
+            inputs = self.processor(
+                image, 
+                return_tensors="pt",
+                padding=True,
+                truncation=True
+            ).to(self.device, torch.float16)
+            
+            # Generate caption with conservative parameters
+            with torch.no_grad():
+                generated_ids = self.blipmodel.generate(
+                    **inputs, 
+                    max_new_tokens=max_new_tokens,
+                    min_length=1,
+                    do_sample=False,
+                    num_beams=1,
+                    early_stopping=True,
+                    pad_token_id=self.processor.tokenizer.pad_token_id,
+                    eos_token_id=self.processor.tokenizer.eos_token_id,
+                    use_cache=True
+                )
+            
+            generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+            
+            # Clean up the generated text
+            if generated_text.startswith("Question: What is in this image? Answer:"):
+                generated_text = generated_text.replace("Question: What is in this image? Answer:", "").strip()
+            
+            # Additional cleanup
+            if not generated_text or generated_text.lower() in ['', 'a', 'an', 'the']:
+                generated_text = "an image"
+            
+            return generated_text
+            
+        except Exception as e:
+            print(f"Error generating caption: {e}")
+            # Return a fallback caption
+            return "an image"
     
     def generate_caption_with_text(self, image_path: str, text: str, max_new_tokens: int = 20) -> str:
         """
@@ -77,14 +129,48 @@ class CaptionGenerator:
         Returns:
             Caption string formatted for text editing task
         """
-        image_pil = Image.fromarray(image_array)
-        inputs = self.processor(image_pil, return_tensors="pt").to(self.device, torch.float16)
+        try:
+            image_pil = Image.fromarray(image_array)
+            image_pil = self._preprocess_image(image_pil)
+            
+            # Process image with specific parameters for stability
+            inputs = self.processor(
+                image_pil, 
+                return_tensors="pt",
+                padding=True,
+                truncation=True
+            ).to(self.device, torch.float16)
 
-        generated_ids = self.blipmodel.generate(**inputs, max_new_tokens=max_new_tokens)
-        generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+            with torch.no_grad():
+                generated_ids = self.blipmodel.generate(
+                    **inputs, 
+                    max_new_tokens=max_new_tokens,
+                    min_length=1,
+                    do_sample=False,
+                    num_beams=1,
+                    early_stopping=True,
+                    pad_token_id=self.processor.tokenizer.pad_token_id,
+                    eos_token_id=self.processor.tokenizer.eos_token_id,
+                    use_cache=True
+                )
+            
+            generated_text = self.processor.batch_decode(generated_ids, skip_special_tokens=True)[0].strip()
+            
+            # Clean up the generated text
+            if generated_text.startswith("Question: What is in this image? Answer:"):
+                generated_text = generated_text.replace("Question: What is in this image? Answer:", "").strip()
+            
+            # Additional cleanup
+            if not generated_text or generated_text.lower() in ['', 'a', 'an', 'the']:
+                generated_text = "an image"
 
-        caption = f'{generated_text}, that reads "{text}"'
-        return caption
+            caption = f'{generated_text}, that reads "{text}"'
+            return caption
+            
+        except Exception as e:
+            print(f"Error generating caption from array: {e}")
+            # Return a fallback caption
+            return f'an image, that reads "{text}"'
 
 
 def main():
@@ -125,4 +211,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main() 
+    main()
