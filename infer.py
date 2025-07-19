@@ -77,7 +77,7 @@ def get_aspect_ratios_dict(
     return aspect_ratios_dict
 
 class FluxTextEditor:
-    def __init__(self, model_path: str, config_path: str, font_path: str = './font/Arial_Unicode.ttf'):
+    def __init__(self, model_path: str, config_path: str, font_path: str = './font/Arial_Unicode.ttf', skip_caption_model: bool = False):
         """
         Initialize the FluxText editor.
         
@@ -85,9 +85,11 @@ class FluxTextEditor:
             model_path: Path to the model checkpoint file
             config_path: Path to the config YAML file
             font_path: Path to the font file for glyph generation
+            skip_caption_model: If True, skip loading the BLIP model for caption generation
         """
         self.font_path = font_path
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
+        self.skip_caption_model = skip_caption_model
         
         # Load config
         with open(config_path, "r") as f:
@@ -99,13 +101,20 @@ class FluxTextEditor:
         # Initialize generator
         self.generator = torch.Generator(device=self.device)
         
-        # Initialize BLIP model for caption generation
-        self.processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
-        self.blipmodel = Blip2ForConditionalGeneration.from_pretrained(
-            "Salesforce/blip2-opt-2.7b", 
-            torch_dtype=torch.float16
-        )
-        self.blipmodel.to(self.device, torch.float16)
+        # Initialize BLIP model for caption generation only if needed
+        if not skip_caption_model:
+            print("Loading BLIP model for caption generation...")
+            self.processor = AutoProcessor.from_pretrained("Salesforce/blip2-opt-2.7b")
+            self.blipmodel = Blip2ForConditionalGeneration.from_pretrained(
+                "Salesforce/blip2-opt-2.7b", 
+                torch_dtype=torch.float16
+            )
+            self.blipmodel.to(self.device, torch.float16)
+            print("BLIP model loaded successfully.")
+        else:
+            print("Skipping BLIP model loading (prompt provided).")
+            self.processor = None
+            self.blipmodel = None
         
         # Initialize the main model
         self.pipe, self.trainable_model = self._init_pipeline(model_path)
@@ -139,6 +148,9 @@ class FluxTextEditor:
     
     def get_captions(self, image: np.ndarray, text: str) -> str:
         """Generate caption for the image with the specified text."""
+        if self.skip_caption_model or self.processor is None or self.blipmodel is None:
+            raise RuntimeError("Caption generation model not loaded. Cannot generate captions when skip_caption_model=True.")
+        
         image_pil = Image.fromarray(image)
         inputs = self.processor(image_pil, return_tensors="pt").to(self.device, torch.float16)
 
@@ -302,11 +314,15 @@ def main():
         output_name = os.path.splitext(os.path.basename(args.output_path))[0]
         args.glyph_output_path = os.path.join(output_dir, f"{output_name}_glyph.png")
     
+    # Determine whether to skip caption model loading
+    skip_caption_model = args.prompt is not None
+    
     # Initialize editor
     editor = FluxTextEditor(
         model_path=args.model_path,
         config_path=args.config_path,
-        font_path=args.font_path
+        font_path=args.font_path,
+        skip_caption_model=skip_caption_model
     )
     
     # Load images
