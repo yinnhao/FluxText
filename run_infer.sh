@@ -44,9 +44,9 @@
 python run_infer.py \
     --config_path "weights/model_multisize/config.yaml" \
     --lora_path "weights/model_multisize/pytorch_lora_weights.safetensors" \
-    --prompt "Car poster, that reads: 精神食粮" \
+    --prompt "An image with the following text in it: ID.3冲量底价" \
     --hint_path "eval/glyph_test_mask_rgb.png" \
     --img_path "text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/imgs/002_2025-07-15.jpeg" \
-    --condition_path "eval/002_2025-07-15_cond.png" \
-    --output_path "my_output.png" \
-    --seed 42
+    --condition_path "./eval/glyph_test.png" \
+    --output_path "my_output_seed_2.png" \
+    --seed 0
