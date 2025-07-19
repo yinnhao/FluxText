@@ -1,6 +1,8 @@
 import numpy as np
 import cv2
-# from PIL import ImageFont
+import argparse
+import sys
+import os
 from t3_dataset import draw_glyph2
 from PIL import Image, ImageFont
 
@@ -42,8 +44,6 @@ def render_glyph_image(
     # 强制转换轮廓数据类型为 int32（OpenCV 要求）
     contour = contours[0].astype(np.float32)
     
-    # polygon = polygon.astype(2)
-
     # 加载字体
     selffont = ImageFont.truetype(font_path, size=font_size)
 
@@ -64,15 +64,58 @@ def render_glyph_image(
     return glyph_img
 
 
+def main():
+    parser = argparse.ArgumentParser(description='从掩码图像生成文字glyph图像')
+    parser.add_argument('--mask_path', type=str, required=True,
+                       help='输入掩码图像路径')
+    parser.add_argument('--text', type=str, required=True,
+                       help='要绘制的文字内容')
+    parser.add_argument('--output_path', type=str, required=True,
+                       help='输出glyph图像路径')
+    parser.add_argument('--font_path', type=str, 
+                       default='/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/font/Arial_Unicode.ttf',
+                       help='字体文件路径')
+    parser.add_argument('--font_size', type=int, default=60,
+                       help='字体大小')
+    
+    args = parser.parse_args()
+    
+    # 检查输入文件是否存在
+    if not os.path.exists(args.mask_path):
+        print(f"错误：掩码图像文件不存在: {args.mask_path}")
+        sys.exit(1)
+    
+    if not os.path.exists(args.font_path):
+        print(f"错误：字体文件不存在: {args.font_path}")
+        sys.exit(1)
+    
+    # 读取掩码图像
+    mask = cv2.imread(args.mask_path, cv2.IMREAD_GRAYSCALE)
+    if mask is None:
+        print(f"错误：无法读取掩码图像: {args.mask_path}")
+        sys.exit(1)
+    
+    # 从mask图像获取宽度和高度
+    height, width = mask.shape
+    print(f"[INFO] 从掩码图像获取尺寸: width={width}, height={height}")
+    
+    try:
+        # 生成glyph图像
+        glyph = render_glyph_image(
+            mask=mask,
+            text=args.text,
+            width=width,
+            height=height,
+            font_path=args.font_path,
+            font_size=args.font_size,
+            save_path=args.output_path
+        )
+        print(f"[✓] 成功生成glyph图像: {args.output_path}")
+        
+    except Exception as e:
+        print(f"错误：生成glyph图像失败: {str(e)}")
+        sys.exit(1)
 
-# mask = cv2.imread("/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/assets/hint1.png", cv2.IMREAD_GRAYSCALE)
-path = "../text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/mask_vis/002_2025-07-15.jpeg"
-# path = "../assets/hint2.png"
-mask = cv2.imread(path, cv2.IMREAD_GRAYSCALE)
-# mask = cv2.imread("/root/paddlejob/workspace/env_run/rmp-individual/zhuyinghao/text_edit/0710-0716-select/wenzi_2025-07-10_2025-07-16/", cv2.IMREAD_GRAYSCALE)
 
-text = "精神食粮"
-width, height = mask.shape[1], mask.shape[0]
-font_path = "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/font/Arial_Unicode.ttf"
-
-glyph = render_glyph_image(mask, text, width, height, font_path, save_path="002_2025-07-15_cond.png")
+if __name__ == "__main__":
+    main()
