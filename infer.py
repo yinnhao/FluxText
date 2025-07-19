@@ -173,11 +173,18 @@ class FluxTextEditor:
         Returns:
             tuple: (hint, glyphs) where hint is normalized mask and glyphs is the glyph image
         """
+        
         mask = mask.astype('uint8')
+        _, mask = cv2.threshold(mask, 127, 255, cv2.THRESH_BINARY)
         contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        if not contours:
+            raise ValueError("未找到有效轮廓")
+
+        # 强制转换轮廓数据类型为 int32（OpenCV 要求）
+        contour = contours[0].astype(np.float32)
         hint = mask / 255
         glyph_scale = 1
-        glyphs = draw_glyph2(self.font, text, contours[0], scale=glyph_scale, width=width, height=height)
+        glyphs = draw_glyph2(self.font, text, contour, scale=glyph_scale, width=width, height=height)
         
         return hint, glyphs
     
@@ -224,7 +231,7 @@ class FluxTextEditor:
         
         # Generate glyph image
         hint, glyphs = self.generate_glyph_from_mask(mask_array, text, tgt_width, tgt_height)
-        
+        glyphs = glyphs[:,:,0]
         # Create glyph PIL image
         glyph_img = Image.fromarray(((1 - glyphs.astype('uint8')) * 255).astype('uint8'))
         if glyph_img.mode != 'RGB':

@@ -18,7 +18,8 @@
                 "--text", "Hello World",
                 "--output_path", "output.jpg",
                 "--save_glyph",
-                "--glyph_output_path", "glyph_images/my_glyph.png"
+                "--glyph_output_path", "glyph_images/my_glyph.png",
+                "--prompt", "an image, that reads Hello"
             ]
         }
     ]
