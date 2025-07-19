@@ -58,8 +58,8 @@ def render_glyph_image(
         glyph_pil.save(save_path)
         print(f"[✓] Glyph image saved to: {save_path}")
         mask_rgb = cv2.cvtColor(mask, cv2.COLOR_GRAY2RGB)  # 从单通道转为三通道
-        mask_save_path = save_path.replace(".png", "_mask_rgb.png")
-        cv2.imwrite(mask_save_path, mask_rgb)
+        # mask_save_path = save_path.replace(".png", "_mask_rgb.png")
+        # cv2.imwrite(mask_save_path, mask_rgb)
 
     return glyph_img
 
@@ -83,7 +83,7 @@ def load_text_mapping(text_file_path):
                     continue
                 
                 # 分割文件名和文本，使用第一个空格作为分隔符
-                parts = line.split(' ', 1)
+                parts = line.split('	', 1)
                 if len(parts) < 2:
                     print(f"警告：第{line_num}行格式不正确，跳过: {line}")
                     continue
@@ -172,7 +172,7 @@ def main():
     parser.add_argument('--font_path', type=str, 
                        default='/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/font/Arial_Unicode.ttf',
                        help='字体文件路径')
-    parser.add_argument('--font_size', type=int, default=60,
+    parser.add_argument('--font_size', type=int, default=100,
                        help='字体大小')
     
     args = parser.parse_args()
