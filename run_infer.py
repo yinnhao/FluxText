@@ -92,10 +92,8 @@ def load_text_mapping(text_file_path):
                 if not line:
                     continue
                 
-                # 分割文件名和文本，使用tab或空格作为分隔符
-                parts = line.split('\t', 1)
-                if len(parts) < 2:
-                    parts = line.split(' ', 1)
+                # 分割文件名和文本，使用第一个空格作为分隔符
+                parts = line.split('	', 1)
                 if len(parts) < 2:
                     print(f"警告：第{line_num}行格式不正确，跳过: {line}")
                     continue
