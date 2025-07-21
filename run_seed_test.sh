@@ -22,7 +22,7 @@ echo "========================================"
 start_time=$(date +%s)
 
 # 循环测试 seed 0 到 50
-for seed in {0..50}; do
+for seed in {18..50}; do
     echo "处理 seed: $seed"
     
     # 为每个 seed 创建单独的输出文件夹
