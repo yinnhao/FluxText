@@ -182,7 +182,8 @@ def process_single_image(model, pipe, config, hint_path, img_path, condition_pat
         )
         
         # Save output
-        res.images[0].save(output_path)
+        resized_img = res.images[0].resize((ori_width, ori_height))
+        resized_img.save(output_path)
         return True
         
     except Exception as e:
