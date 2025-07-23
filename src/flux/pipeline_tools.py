@@ -5,8 +5,8 @@ from torch import Tensor
 
 
 def encode_images(pipeline: FluxPipeline, images: Tensor):
-    images = pipeline.image_processor.preprocess(images)
-    images = images.to(pipeline.device).to(pipeline.dtype)
+    images = pipeline.image_processor.preprocess(images) # [1, 3, h, w]
+    images = images.to(pipeline.device).to(pipeline.dtype) # [1, 16, 112, 146]
     images = pipeline.vae.encode(images).latent_dist.sample()
     images = (
         images - pipeline.vae.config.shift_factor

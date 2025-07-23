@@ -155,7 +155,7 @@ def process_single_image(model, pipe, config, hint_path, img_path, condition_pat
         hint = np.array(hint) / 255
         condition_img = np.array(condition_img)
         condition_img = (255 - condition_img) / 255
-        condition_img = [condition_img, hint, img]
+        condition_img = [condition_img, hint, img] # [h, w, 3]
         position_delta = [0, 0]
         
         condition = Condition(
@@ -172,13 +172,13 @@ def process_single_image(model, pipe, config, hint_path, img_path, condition_pat
         # Generate image
         res = generate_fill(
             pipe,
-            prompt=prompt,
+            prompt=[prompt, prompt],
             conditions=[condition],
             height=tgt_height,
             width=tgt_width,
             generator=generator,
             model_config=config.get("model", {}),
-            default_lora=True,
+            default_lora=True
         )
         
         # Save output

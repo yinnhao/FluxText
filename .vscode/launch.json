@@ -11,15 +11,14 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "args": [
-                "--model_path", "weights/model_multisize/pytorch_lora_weights.safetensors",
                 "--config_path", "weights/model_multisize/config.yaml",
-                "--image_path", "./assets/hint_imgs.jpg",
-                "--mask_path", "./assets/hint.png",
-                "--text", "Hello World",
-                "--output_path", "output.jpg",
-                "--save_glyph",
-                "--glyph_output_path", "glyph_images/my_glyph.png",
-                "--prompt", "an image, that reads Hello"
+                "--lora_path", "weights/model_multisize/pytorch_lora_weights.safetensors",
+                "--prompt", "An image with the following text in it: ID.3冲量底价",
+                "--hint_path", "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/text_edit/0710-0716-select-wise/wenzi_2025-07-10_2025-07-16/mask_vis/004_2025-07-12.jpeg",
+                "--img_path", "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/text_edit/0710-0716-select-wise/wenzi_2025-07-10_2025-07-16/imgs/004_2025-07-12.jpeg",
+                "--condition_path", "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/text_edit/0710-0716-select-wise/wenzi_2025-07-10_2025-07-16/glyph/004_2025-07-12_glyph.png",
+                "--output_path", "my_output_seed_14.png",
+                "--seed", "14"
             ]
         }
     ]

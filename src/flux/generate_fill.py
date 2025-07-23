@@ -184,7 +184,7 @@ def generate_fill(
     )
 
     # 4.1. Prepare conditions
-    condition_img, hint, imgs = conditions[0].condition
+    condition_img, hint, imgs = conditions[0].condition # condition_img: [h, w, 3], hint: [h, w, 3], imgs: PIL images: [w, h]
     type_id = conditions[0].type_id
     _height = 2 * (int(height) // (self.vae_scale_factor * 2))
     _width = 2 * (int(width) // (self.vae_scale_factor * 2))
