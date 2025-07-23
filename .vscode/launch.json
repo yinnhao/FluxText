@@ -19,7 +19,8 @@
                 "--condition_path", "/root/paddlejob/workspace/env_run/zhuyinghao/FluxText/text_edit/0710-0716-select-wise/wenzi_2025-07-10_2025-07-16/glyph/004_2025-07-12_glyph.png",
                 "--output_path", "my_output_seed_14.png",
                 "--seed", "14"
-            ]
+            ],
+            "justMyCode": false
         }
     ]
 }

@@ -192,15 +192,23 @@ def generate_fill(
     condition_height = 2 * (int(condition_height) // (self.vae_scale_factor * 2))
     condition_width = 2 * (int(condition_width) // (self.vae_scale_factor * 2))
     
-    condition_latents, condition_ids = encode_images(self, condition_img)
-    condition_type_ids = (torch.ones_like(condition_ids[:, 0]) * type_id).unsqueeze(1)
+    condition_latents, condition_ids = encode_images(self, condition_img) # [1, 4088, 64] [4088, 3]
+    condition_type_ids = (torch.ones_like(condition_ids[:, 0]) * type_id).unsqueeze(1) # [4088, 1]
 
-    condition_img = condition_img[:, :, 0]
-    mask_image = hint[:, :, 0]
+    condition_img = condition_img[:, :, 0] # [896, 1168]
+    mask_image = hint[:, :, 0] # [896, 1168]
 
-    imgs = self.image_processor.preprocess(imgs, height=height, width=width) 
-    mask_image = self.mask_processor.preprocess(mask_image, height=height, width=width)
-    masked_image = imgs * (1 - mask_image)
+    imgs = self.image_processor.preprocess(imgs, height=height, width=width) # [1, 3, 896, 1168]
+    mask_image = self.mask_processor.preprocess(mask_image, height=height, width=width) # [1, 1, 896, 1168]
+    masked_image = imgs * (1 - mask_image) # [1, 3, 896, 1168]
+    
+    if batch_size > 1:
+        imgs = imgs.repeat(batch_size, 1, 1, 1)
+        mask_image = mask_image.repeat(batch_size, 1, 1, 1)
+        masked_image = masked_image.repeat(batch_size, 1, 1, 1)
+        condition_latents = condition_latents.repeat(batch_size, 1, 1)
+        condition_type_ids = condition_type_ids.repeat(1, batch_size)
+    
     def _encode_mask(images):
         images = images.to(self.device).to(self.dtype)
         images = self.vae.encode(images).latent_dist.sample()
