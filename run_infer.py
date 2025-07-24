@@ -182,8 +182,16 @@ def process_single_image(model, pipe, config, hint_path, img_path, condition_pat
         )
         
         # Save output
-        resized_img = res.images[0].resize((ori_width, ori_height))
-        resized_img.save(output_path)
+        res_list = res.images
+        base_name = os.path.basename(output_path)
+        dir_path = os.path.dirname(output_path)
+        for i, img in enumerate(res_list):
+            resized_img = img.resize((ori_width, ori_height))
+            save_img_name = base_name.split(".")[0] + f"_{i}.png"
+            save_path = os.path.join(dir_path, save_img_name)
+            resized_img.save(save_path)
+        # resized_img = res.images[0].resize((ori_width, ori_height))
+        # resized_img.save(output_path)
         return True
         
     except Exception as e:
@@ -374,7 +382,7 @@ def main():
             args.condition_path, args.prompt, args.output_path, 
             args.device, args.seed
         ):
-            print(f"输出已保存到: {args.output_path}")
+            print(f"输出已保存")
         else:
             print("处理失败")
 
